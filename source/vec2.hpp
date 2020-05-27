@@ -29,4 +29,4 @@ Vec2 operator*(float s, Vec2 const& v);
 
 
 
-#endif
+#endif // VEC2_HPP

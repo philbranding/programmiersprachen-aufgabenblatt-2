@@ -4,44 +4,47 @@
 #include <cmath>
 
 //The Default Constructor
-Mat2::Mat2(): a_TopLeft{1},b_TopRight{0},c_DownLeft{1},d_DownRight{0}{
+// matrix layout :
+// e_00 e_10
+// e_01 e_11
+Mat2::Mat2(): e_00{1.0f},e_10{0.0f},e_01{1.0f},e_11{0.0f}{
 }
 
 //The User Defined Constructor
 Mat2::Mat2(float a, float b, float c, float d): 
-a_TopLeft{a},
-b_TopRight{b},
-c_DownLeft{c},
-d_DownRight{d}{
+e_00{a},
+e_10{b},
+e_01{c},
+e_11{d}{
 }
 
 //Matrix Multiplication Operator Overload Defination
 Mat2& Mat2::operator*=(Mat2 const& m){
-  float a_NewTopLeft   = (a_TopLeft * m.a_TopLeft)  + (b_TopRight * m.c_DownLeft);
-  float b_NewTopRight  = (a_TopLeft * m.b_TopRight) + (b_TopRight * m.d_DownRight);
-  float c_NewDownLeft  = (c_DownLeft * m.a_TopLeft) + (d_DownRight * m.c_DownLeft);
-  float d_NewDownRight = (c_DownLeft * m.b_TopRight) + (d_DownRight * m.d_DownRight);
+  float e_New00 = (e_00 * m.e_00) + (e_10 * m.e_01);
+  float e_New10 = (e_00 * m.e_10) + (e_10 * m.e_11);
+  float e_New01 = (e_01 * m.e_00) + (e_11 * m.e_01);
+  float e_New11 = (e_01 * m.e_10) + (e_11 * m.e_11);
 
-  a_TopLeft  = a_NewTopLeft;
-  b_TopRight = b_NewTopRight;
-  c_DownLeft = c_NewDownLeft;
-  d_DownRight= d_NewDownRight;
+  e_00 = e_New00;
+  e_10 = e_New10;
+  e_01 = e_New01;
+  e_11 = e_New11;
 
   return *this;
 }
 
 float Mat2::det() const{
-  return ((a_TopLeft*d_DownRight)- (b_TopRight*c_DownLeft)) ;
+  return ((e_00*e_11)- (e_10*e_01)) ;
 }
 
 
 Mat2 operator*(Mat2 const& m1, Mat2 const& m2){
   
   Mat2 Mat2Object;
-  Mat2Object.a_TopLeft   = (m1.a_TopLeft  * m2.a_TopLeft)  + (m1.b_TopRight  * m2.c_DownLeft);
-  Mat2Object.b_TopRight  = (m1.a_TopLeft  * m2.b_TopRight) + (m1.b_TopRight  * m2.d_DownRight);
-  Mat2Object.c_DownLeft  = (m1.c_DownLeft * m2.a_TopLeft)  + (m1.d_DownRight * m2.c_DownLeft);
-  Mat2Object.d_DownRight = (m1.c_DownLeft * m2.b_TopRight) + (m1.d_DownRight * m2.d_DownRight);
+  Mat2Object.e_00 = (m1.e_00 * m2.e_00) + (m1.e_10 * m2.e_01);
+  Mat2Object.e_10 = (m1.e_00 * m2.e_10) + (m1.e_10 * m2.e_11);
+  Mat2Object.e_01 = (m1.e_01 * m2.e_00) + (m1.e_11 * m2.e_01);
+  Mat2Object.e_11 = (m1.e_01 * m2.e_10) + (m1.e_11 * m2.e_11);
   
   return Mat2Object;
 
@@ -50,8 +53,8 @@ Mat2 operator*(Mat2 const& m1, Mat2 const& m2){
 Vec2 operator*(Mat2 const& m, Vec2 const& v){
   
   Vec2 NewObject;
-  NewObject.x = (m.a_TopLeft*v.x)  + (m.b_TopRight*v.y);
-  NewObject.y = (m.c_DownLeft*v.x) + (m.d_DownRight*v.y);
+  NewObject.x = (m.e_00*v.x) + (m.e_10*v.y);
+  NewObject.y = (m.e_01*v.x) + (m.e_11*v.y);
 
   return NewObject;
 }
@@ -59,8 +62,8 @@ Vec2 operator*(Mat2 const& m, Vec2 const& v){
 Vec2 operator*(Vec2 const& v, Mat2 const& m){
   
   Vec2 NewObject;
-  NewObject.x = (v.x*m.a_TopLeft) + (v.y*m.b_TopRight);
-  NewObject.y = (v.x*m.c_DownLeft)+ (v.y*m.d_DownRight);
+  NewObject.x = (v.x*m.e_00) + (v.y*m.e_10);
+  NewObject.y = (v.x*m.e_01) + (v.y*m.e_11);
 
   return NewObject;
 
@@ -70,10 +73,10 @@ Vec2 operator*(Vec2 const& v, Mat2 const& m){
 Mat2 inverse(Mat2 const& m){
   
   Mat2 inverseMatrix;
-  inverseMatrix.a_TopLeft   = (1/m.det())*(m.d_DownRight);
-  inverseMatrix.b_TopRight  = (1/m.det())*(m.b_TopRight)*-1;
-  inverseMatrix.c_DownLeft  = (1/m.det())*(m.c_DownLeft)*-1;
-  inverseMatrix.d_DownRight = (1/m.det())*(m.a_TopLeft);
+  inverseMatrix.e_00 = (1/m.det())*(m.e_11);
+  inverseMatrix.e_10 = (1/m.det())*(m.e_10)*-1;
+  inverseMatrix.e_01 = (1/m.det())*(m.e_01)*-1;
+  inverseMatrix.e_11 = (1/m.det())*(m.e_00);
 
   return inverseMatrix;
 }
@@ -82,10 +85,10 @@ Mat2 inverse(Mat2 const& m){
 Mat2 transpose(Mat2 const& m){
   
   Mat2 transposeMatrix;
-  transposeMatrix.a_TopLeft  = m.a_TopLeft;
-  transposeMatrix.b_TopRight = m.c_DownLeft;
-  transposeMatrix.c_DownLeft = m.b_TopRight;
-  transposeMatrix.d_DownRight= m.d_DownRight;
+  transposeMatrix.e_00 = m.e_00;
+  transposeMatrix.e_10 = m.e_01;
+  transposeMatrix.e_01 = m.e_10;
+  transposeMatrix.e_11 = m.e_11;
 
   return transposeMatrix;
 }
@@ -94,10 +97,10 @@ Mat2 transpose(Mat2 const& m){
 Mat2 make_rotation_mat2(float phi){
   
   Mat2 rotationMatrix;
-  rotationMatrix.a_TopLeft   = cos(phi);
-  rotationMatrix.b_TopRight  = (sin(phi))*(-1);
-  rotationMatrix.c_DownLeft  = sin(phi);
-  rotationMatrix.d_DownRight = cos(phi);
+  rotationMatrix.e_00 = cos(phi);
+  rotationMatrix.e_00 = (sin(phi))*(-1);
+  rotationMatrix.e_01 = sin(phi);
+  rotationMatrix.e_11 = cos(phi);
 
   return rotationMatrix;
 

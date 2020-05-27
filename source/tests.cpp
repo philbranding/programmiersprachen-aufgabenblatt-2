@@ -9,6 +9,10 @@ TEST_CASE("Testing default Constructor","[Constructor]"){
 	Vec2 a;
 	REQUIRE(a.x == 0.0f);
 	REQUIRE(a.y == 0.0f);
+
+	Vec2 b{5.1f, -9.3f};
+	REQUIRE(5.1f == Approx(b.x));
+	REQUIRE(b.y == Approx(b.y));
 }
 
 
@@ -245,22 +249,22 @@ TEST_CASE("Testing Mat2 Constructors","[Constructor]"){
 	
 
 	Mat2 a;
-	REQUIRE(a.a_TopLeft  == 1.0f);
-	REQUIRE(a.b_TopRight == 0.0f);
-	REQUIRE(a.c_DownLeft == 1.0f);
-	REQUIRE(a.d_DownRight == 0.0f);
+	REQUIRE(a.e_00 == 1.0f);
+	REQUIRE(a.e_10 == 0.0f);
+	REQUIRE(a.e_01 == 1.0f);
+	REQUIRE(a.e_11 == 0.0f);
 
 	Mat2 b{10.3,5.6,1.0,8.6};
-	REQUIRE(b.a_TopLeft  == 10.3f);
-	REQUIRE(b.b_TopRight == 5.6f);
-	REQUIRE(b.c_DownLeft == 1.0f);
-	REQUIRE(b.d_DownRight == 8.6f);
+	REQUIRE(b.e_00 == 10.3f);
+	REQUIRE(b.e_10 == 5.6f);
+	REQUIRE(b.e_01 == 1.0f);
+	REQUIRE(b.e_11 == 8.6f);
 
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
-	REQUIRE(c.a_TopLeft  == -0.3f);
-	REQUIRE(c.b_TopRight == -0.6f);
-	REQUIRE(c.c_DownLeft == -0.4f);
-	REQUIRE(c.d_DownRight ==-0.7f);	
+	REQUIRE(c.e_00 == -0.3f);
+	REQUIRE(c.e_10 == -0.6f);
+	REQUIRE(c.e_01 == -0.4f);
+	REQUIRE(c.e_11 ==-0.7f);	
 }
 
 // float det() const;
@@ -286,28 +290,28 @@ TEST_CASE("Testing Mutltiplying two Mat2 Matrix *operator","[operator]"){
 	Mat2 b{10.3,5.6,1.0,8.6};
 
 	a*=b;
-	REQUIRE(a.a_TopLeft  == 10.3f);
-	REQUIRE(a.b_TopRight == 5.6f);
-	REQUIRE(a.c_DownLeft == 10.3f);
-	REQUIRE(a.d_DownRight == 5.6f);
+	REQUIRE(a.e_00 == 10.3f);
+	REQUIRE(a.e_10 == 5.6f);
+	REQUIRE(a.e_01 == 10.3f);
+	REQUIRE(a.e_11 == 5.6f);
 
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d{-10.3,-5.6,-1.0,-8.6};
 
 	c*=d;
-	REQUIRE(c.a_TopLeft  == 3.69f);
-	REQUIRE(c.b_TopRight == 6.84f);
-	REQUIRE(c.c_DownLeft == 4.82f);
-	REQUIRE(c.d_DownRight == 8.26f);
+	REQUIRE(c.e_00 == 3.69f);
+	REQUIRE(c.e_10 == 6.84f);
+	REQUIRE(c.e_01 == 4.82f);
+	REQUIRE(c.e_11 == 8.26f);
 
 	Mat2 e{1.0,2.0,3.0,4.0};
 	Mat2 f{0.5,0.6,0.7,0.8};
 
 	e*=f;
-	REQUIRE(e.a_TopLeft  == 1.9f);
-	REQUIRE(e.b_TopRight == 2.2f);
-	REQUIRE(e.c_DownLeft == 4.3f);
-	REQUIRE(e.d_DownRight == 5.0f);
+	REQUIRE(e.e_00 == 1.9f);
+	REQUIRE(e.e_10 == 2.2f);
+	REQUIRE(e.e_01 == 4.3f);
+	REQUIRE(e.e_11 == 5.0f);
 }
 
 // Mat2 operator*(Mat2 const& m1, Mat2 const& m2);
@@ -318,30 +322,30 @@ TEST_CASE("Testing Mutltiplying Mat3/Mat4/Mat54 Matrix *operator","[operator]"){
 
 	Mat2 Mat3 = a*b;
 
-	REQUIRE(Mat3.a_TopLeft  == 10.3f);
-	REQUIRE(Mat3.b_TopRight == 5.6f);
-	REQUIRE(Mat3.c_DownLeft == 10.3f);
-	REQUIRE(Mat3.d_DownRight == 5.6f);
+	REQUIRE(Mat3.e_00 == 10.3f);
+	REQUIRE(Mat3.e_10 == 5.6f);
+	REQUIRE(Mat3.e_01 == 10.3f);
+	REQUIRE(Mat3.e_11 == 5.6f);
 
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d{-10.3,-5.6,-1.0,-8.6};
 
 	Mat2 Mat4 = c*d;
 
-	REQUIRE(Mat4.a_TopLeft  == 3.69f);
-	REQUIRE(Mat4.b_TopRight == 6.84f);
-	REQUIRE(Mat4.c_DownLeft == 4.82f);
-	REQUIRE(Mat4.d_DownRight == 8.26f);
+	REQUIRE(Mat4.e_00 == 3.69f);
+	REQUIRE(Mat4.e_10 == 6.84f);
+	REQUIRE(Mat4.e_01 == 4.82f);
+	REQUIRE(Mat4.e_11 == 8.26f);
 
 	Mat2 e{1.0,2.0,3.0,4.0};
 	Mat2 f{0.5,0.6,0.7,0.8};
 
 	Mat2 Mat5 = e*f;
 
-	REQUIRE(Mat5.a_TopLeft  == 1.9f);
-	REQUIRE(Mat5.b_TopRight == 2.2f);
-	REQUIRE(Mat5.c_DownLeft == 4.3f);
-	REQUIRE(Mat5.d_DownRight == 5.0f);
+	REQUIRE(Mat5.e_00 == 1.9f);
+	REQUIRE(Mat5.e_10 == 2.2f);
+	REQUIRE(Mat5.e_01 == 4.3f);
+	REQUIRE(Mat5.e_11 == 5.0f);
 }
 
 // Vec2 operator*(Mat2 const& m, Vec2 const& v);
@@ -352,7 +356,7 @@ TEST_CASE("Testing Mutltiplying  Mat2 X Vec2 *operator","[operator]"){
 
 	Vec2 Vec3 = a*Vb;
 
-	REQUIRE(Vec3.x  == Approx(0.0f));
+	REQUIRE(Vec3.x == Approx(0.0f));
 	REQUIRE(Vec3.y == Approx(0.0f));
 	
 
@@ -361,7 +365,7 @@ TEST_CASE("Testing Mutltiplying  Mat2 X Vec2 *operator","[operator]"){
 
 	Vec2 Vec4 = c*Vd;
 
-	REQUIRE(Vec4.x  == Approx(6.45f));
+	REQUIRE(Vec4.x == Approx(6.45f));
 	REQUIRE(Vec4.y == Approx(8.04f));
 	
 	
@@ -370,7 +374,7 @@ TEST_CASE("Testing Mutltiplying  Mat2 X Vec2 *operator","[operator]"){
 
 	Vec2 Vec5 = e*Vf;
 
-	REQUIRE(Vec5.x  == Approx(20.2f));
+	REQUIRE(Vec5.x == Approx(20.2f));
 	REQUIRE(Vec5.y == Approx(40.6f));
 }
 
@@ -383,7 +387,7 @@ TEST_CASE("Testing Mutltiplying  Vec2 X Mat2 *operator","[operator]"){
 
 	Vec2 Vec3 = Vb*a;
 
-	REQUIRE(Vec3.x  == Approx(0.0f));
+	REQUIRE(Vec3.x == Approx(0.0f));
 	REQUIRE(Vec3.y == Approx(0.0f));
 	
 
@@ -392,7 +396,7 @@ TEST_CASE("Testing Mutltiplying  Vec2 X Mat2 *operator","[operator]"){
 
 	Vec2 Vec4 = Vd*c;
 
-	REQUIRE(Vec4.x  == Approx(6.45f));
+	REQUIRE(Vec4.x == Approx(6.45f));
 	REQUIRE(Vec4.y == Approx(8.04f));
 	
 	
@@ -401,7 +405,7 @@ TEST_CASE("Testing Mutltiplying  Vec2 X Mat2 *operator","[operator]"){
 
 	Vec2 Vec5 = Vf*e;
 
-	REQUIRE(Vec5.x  == Approx(20.2f));
+	REQUIRE(Vec5.x == Approx(20.2f));
 	REQUIRE(Vec5.y == Approx(40.6f));
 }
 
@@ -412,18 +416,18 @@ TEST_CASE("Testing Inverse of Mat2 inverseMatrix","[inverseMatrix]"){
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d = inverse(c);
 
-	REQUIRE(d.a_TopLeft  == Approx(23.33333));
-	REQUIRE(d.b_TopRight == Approx(-20.0f));
-	REQUIRE(d.c_DownLeft == Approx(-13.33333f));
-	REQUIRE(d.d_DownRight == Approx(10.0f));
+	REQUIRE(d.e_00 == Approx(23.33333));
+	REQUIRE(d.e_10 == Approx(-20.0f));
+	REQUIRE(d.e_01 == Approx(-13.33333f));
+	REQUIRE(d.e_11 == Approx(10.0f));
 
 	Mat2 e{1.0,2.0,3.0,4.0};
 	Mat2 f = inverse(e);
 
-	REQUIRE(f.a_TopLeft  == Approx(-2.0f));
-	REQUIRE(f.b_TopRight == Approx(1.0f));
-	REQUIRE(f.c_DownLeft == Approx(1.5f));
-	REQUIRE(f.d_DownRight == Approx(-0.5f));
+	REQUIRE(f.e_00 == Approx(-2.0f));
+	REQUIRE(f.e_01 == Approx(1.0f));
+	REQUIRE(f.e_10 == Approx(1.5f));
+	REQUIRE(f.e_11 == Approx(-0.5f));
 }
 
 //Mat2 transpose(Mat2 const& m)
@@ -432,26 +436,26 @@ TEST_CASE("Testing Inverse of Mat2 transposeMatrix","[transposeMatrix]"){
 	Mat2 a{};
 	Mat2 b = transpose(a);
 
-	REQUIRE(b.a_TopLeft  == Approx(1.0));
-	REQUIRE(b.b_TopRight == Approx(1.0f));
-	REQUIRE(b.c_DownLeft == Approx(0.0f));
-	REQUIRE(b.d_DownRight == Approx(0.0f));
+	REQUIRE(b.e_00 == Approx(1.0));
+	REQUIRE(b.e_10 == Approx(1.0f));
+	REQUIRE(b.e_01 == Approx(0.0f));
+	REQUIRE(b.e_11 == Approx(0.0f));
 	
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d = transpose(c);
 
-	REQUIRE(d.a_TopLeft  == Approx(-0.3));
-	REQUIRE(d.b_TopRight == Approx(-0.4f));
-	REQUIRE(d.c_DownLeft == Approx(-0.6f));
-	REQUIRE(d.d_DownRight == Approx(-0.7f));
+	REQUIRE(d.e_00 == Approx(-0.3));
+	REQUIRE(d.e_10 == Approx(-0.4f));
+	REQUIRE(d.e_01 == Approx(-0.6f));
+	REQUIRE(d.e_00 == Approx(-0.7f));
 
 	Mat2 e{1.1,2.2,3.3,4.4};
 	Mat2 f = transpose(e);
 
-	REQUIRE(f.a_TopLeft  == Approx(1.1f));
-	REQUIRE(f.b_TopRight == Approx(3.3f));
-	REQUIRE(f.c_DownLeft == Approx(2.2f));
-	REQUIRE(f.d_DownRight == Approx(4.4f));
+	REQUIRE(f.e_00 == Approx(1.1f));
+	REQUIRE(f.e_10 == Approx(3.3f));
+	REQUIRE(f.e_01 == Approx(2.2f));
+	REQUIRE(f.e_11 == Approx(4.4f));
 }
 
 //Mat2 make_rotation_mat2(float phi)
@@ -459,26 +463,26 @@ TEST_CASE("Testing Inverse of Mat2 rotationMatrix","[rotationMatrix]"){
 	
 	Mat2 b = make_rotation_mat2(180.0f);
 
-	REQUIRE(b.a_TopLeft  == Approx(-0.59846f));
-	REQUIRE(b.b_TopRight == Approx(0.80115f));
-	REQUIRE(b.c_DownLeft == Approx(-0.80115f));
-	REQUIRE(b.d_DownRight == Approx(-0.59846));
+	REQUIRE(b.e_00 == Approx(-0.59846f));
+	REQUIRE(b.e_10 == Approx(0.80115f));
+	REQUIRE(b.e_01 == Approx(-0.80115f));
+	REQUIRE(b.e_11 == Approx(-0.59846));
 	
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d = c*(make_rotation_mat2(-0.5f));
 
-	REQUIRE(d.a_TopLeft  == Approx(0.02438));
-	REQUIRE(d.b_TopRight == Approx(-0.67038f));
-	REQUIRE(d.c_DownLeft == Approx(-0.01544f));
-	REQUIRE(d.d_DownRight == Approx(-0.80608f));
+	REQUIRE(d.e_00 == Approx(0.02438));
+	REQUIRE(d.e_10 == Approx(-0.67038f));
+	REQUIRE(d.e_01 == Approx(-0.01544f));
+	REQUIRE(d.e_11 == Approx(-0.80608f));
 
 	Mat2 e{1.1,2.2,3.3,4.4};
 	Mat2 f = e*(make_rotation_mat2(10.0));
 
-	REQUIRE(f.a_TopLeft  == Approx(-2.11983f));
-	REQUIRE(f.b_TopRight == Approx(-1.24753f));
-	REQUIRE(f.c_DownLeft == Approx(-5.16263f));
-	REQUIRE(f.d_DownRight == Approx(-1.89665f));
+	REQUIRE(f.e_00 == Approx(-2.11983f));
+	REQUIRE(f.e_10 == Approx(-1.24753f));
+	REQUIRE(f.e_01 == Approx(-5.16263f));
+	REQUIRE(f.e_11 == Approx(-1.89665f));
 }
 
 
