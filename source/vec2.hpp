@@ -5,7 +5,6 @@ class Vec2
 {
 	public:
 		//Constructors
-	    
 	    Vec2(); //default
 	    Vec2(float x, float y); //intialisation
 

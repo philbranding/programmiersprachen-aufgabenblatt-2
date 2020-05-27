@@ -1,5 +1,8 @@
 #include "vec2.hpp"
 
+//Have added the definitions
+
+
 // Default Constructor Method
 Vec2::Vec2() 
     : x(0), y(0){
