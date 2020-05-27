@@ -3,6 +3,10 @@
 #include <cmath>
 #include "vec2.hpp"
 #include "mat2.hpp"
+#include "color.hpp"
+#include "rectangle.hpp"
+#include "circle.hpp"
+
 
 // Vec2::Vec2(): x(0), y(0)
 TEST_CASE("Testing default Constructor","[Constructor]"){
@@ -485,7 +489,50 @@ TEST_CASE("Testing Inverse of Mat2 rotationMatrix","[rotationMatrix]"){
 	REQUIRE(f.e_11 == Approx(-3.69191f));
 }
 
+// AUFGABE 2.8, 2.9 & 2.10
+TEST_CASE("CircleRectangle", "[vector19]")
+{
+  Vec2 punkt1{};
+  Vec2 punkt2{2.2f,-3.4f};
 
+  Color test {0.5f,0.7f,0.2f};
+  Color white {1.0}; // sets r = g = b =0.0
+  
+  Circle cir1 {punkt1, 2.2f, test};
+  Circle cir2 {punkt2, -5.0f, white};
+
+  Rectangle rect1 {punkt1, punkt2, white};
+
+  REQUIRE(cir1.get_radius() == Approx(2.2f).epsilon(0.01f));
+  REQUIRE(cir1.get_center().x == Approx(0.0f).epsilon(0.01f));
+  
+  REQUIRE(cir2.get_radius() == Approx(5.0f).epsilon(0.01f));
+  REQUIRE(cir2.get_center().y == Approx(-3.4f).epsilon(0.01f));
+  
+  REQUIRE(rect1.get_length()== Approx(3.4f).epsilon(0.01f));
+  REQUIRE(rect1.get_width()== Approx(2.2f).epsilon(0.01f));
+
+  REQUIRE(rect1.get_max().x== Approx(2.2f).epsilon(0.01f));
+  REQUIRE(rect1.get_max().y== Approx(0.0f).epsilon(0.01f));
+  
+  REQUIRE(rect1.get_min().x== Approx(0.0f).epsilon(0.01f));  
+  REQUIRE(rect1.get_min().y== Approx(-3.4f).epsilon(0.01f));
+
+  REQUIRE(cir1.circumference() == Approx(13.82f).epsilon(0.01f));
+  REQUIRE(cir2.circumference() == Approx(31.14f).epsilon(0.01f));
+  
+  REQUIRE(rect1.circumference()== Approx(11.2f).epsilon(0.01f));
+  
+  REQUIRE(cir1.get_color().r == Approx(0.5f).epsilon(0.01f));
+  REQUIRE(cir1.get_color().g == Approx(0.7f).epsilon(0.01f));
+  REQUIRE(cir1.get_color().b == Approx(0.2f).epsilon(0.01f));
+
+  REQUIRE(rect1.get_color().r == Approx(1.0f).epsilon(0.01f));
+  REQUIRE(rect1.get_color().g == Approx(1.0f).epsilon(0.01f));
+  REQUIRE(rect1.get_color().b == Approx(1.0f).epsilon(0.01f));
+  
+  
+}
 
 
 
