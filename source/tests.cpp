@@ -425,8 +425,8 @@ TEST_CASE("Testing Inverse of Mat2 inverseMatrix","[inverseMatrix]"){
 	Mat2 f = inverse(e);
 
 	REQUIRE(f.e_00 == Approx(-2.0f));
-	REQUIRE(f.e_01 == Approx(1.0f));
-	REQUIRE(f.e_10 == Approx(1.5f));
+	REQUIRE(f.e_01 == Approx(1.5f));
+	REQUIRE(f.e_10 == Approx(1.0f));
 	REQUIRE(f.e_11 == Approx(-0.5f));
 }
 
@@ -447,7 +447,7 @@ TEST_CASE("Testing Inverse of Mat2 transposeMatrix","[transposeMatrix]"){
 	REQUIRE(d.e_00 == Approx(-0.3));
 	REQUIRE(d.e_10 == Approx(-0.4f));
 	REQUIRE(d.e_01 == Approx(-0.6f));
-	REQUIRE(d.e_00 == Approx(-0.7f));
+	REQUIRE(d.e_00 == Approx(-0.3f));
 
 	Mat2 e{1.1,2.2,3.3,4.4};
 	Mat2 f = transpose(e);
@@ -463,26 +463,26 @@ TEST_CASE("Testing Inverse of Mat2 rotationMatrix","[rotationMatrix]"){
 	
 	Mat2 b = make_rotation_mat2(180.0f);
 
-	REQUIRE(b.e_00 == Approx(-0.59846f));
-	REQUIRE(b.e_10 == Approx(0.80115f));
+	REQUIRE(b.e_00 == Approx(0.80115f));
+	REQUIRE(b.e_10 == Approx(0.0));
 	REQUIRE(b.e_01 == Approx(-0.80115f));
 	REQUIRE(b.e_11 == Approx(-0.59846));
 	
 	Mat2 c{-0.3,-0.6,-0.4,-0.7};
 	Mat2 d = c*(make_rotation_mat2(-0.5f));
 
-	REQUIRE(d.e_00 == Approx(0.02438));
-	REQUIRE(d.e_10 == Approx(-0.67038f));
-	REQUIRE(d.e_01 == Approx(-0.01544f));
-	REQUIRE(d.e_11 == Approx(-0.80608f));
+	REQUIRE(d.e_00 == Approx(0.14383f));
+	REQUIRE(d.e_10 == Approx(-0.52655f));
+	REQUIRE(d.e_01 == Approx(0.14383f));
+	REQUIRE(d.e_11 == Approx(-0.61431f));
 
 	Mat2 e{1.1,2.2,3.3,4.4};
 	Mat2 f = e*(make_rotation_mat2(10.0));
 
-	REQUIRE(f.e_00 == Approx(-2.11983f));
-	REQUIRE(f.e_10 == Approx(-1.24753f));
-	REQUIRE(f.e_01 == Approx(-5.16263f));
-	REQUIRE(f.e_11 == Approx(-1.89665f));
+	REQUIRE(f.e_00 == Approx(-0.59842f));
+	REQUIRE(f.e_10 == Approx(-1.84596f));
+	REQUIRE(f.e_01 == Approx(-0.59842f));
+	REQUIRE(f.e_11 == Approx(-3.69191f));
 }
 
 
