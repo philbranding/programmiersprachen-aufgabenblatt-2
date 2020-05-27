@@ -1,33 +1,31 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
-#include "vec2.cpp"
+#include "vec2.hpp"
+#include "color.hpp"
+#include "rectangle.hpp"
+#include "window.hpp"
 
-class Rectangle
-{
+class Rectangle{
+
 public:
-	Rectangle(); // default Constructor 
-	Rectangle(Vec2 const& v, float x, float y); // Vector with two points constructor
-	Rectangle(Vec2 const& v, float x, float y, Color const& r); // Vector with two points and a Color constructor
-	float x_; //Height
-	float y_; //Lenght
-	Vec2 v_; // Vector Instance
-	Color rgb; // Color Instance
+    Rectangle();
+    Rectangle(Vec2 const& punkt1, Vec2 const& punkt2, Color const& _color);
+    
+    float get_length() const;
+    float get_width() const;
+    
+    Vec2 get_max() const;
+    Vec2 get_min() const;
 
-	//Getter Methods
-	float getHeight();
-	float getLenght(); 
+    float circumference() const;
+    Color get_color() const;
 
-	float circumference();
-	float areaOfShape();
-	float diagonal();
+    void draw(Window const& _win, Color const& overload_col);
+            
+private:
+    Vec2 min_, max_;
+    Color col;
+};
 
-	//Window Draw Methods
-	void draw( Window& window);
-	void draw(Window& window, Color r)
-	bool is_inside(Vec2 v);
-
-	//Setter Methods
-	void setHeight(float x); 
-	void setLenght(float y);
 
 #endif

@@ -1,146 +1,59 @@
 #include "rectangle.hpp"
-#include "window.hpp"
-#include "vec2.hpp"
-#include "color.hpp"
 #include <cmath>
+#include <algorithm>
+#include "window.hpp"
 
-Rectangle::Rectangle():
- x_{3},
- y_{4}, 
- z_{3,3},
- rgb{0,0,0}{
+using namespace std;
 
-}
-
-Rectangle::Rectangle(Vec2 v, float x, float y):
-x_{x},
-y_{y},
-v_{v},
-rgb{0,0,0}{
+Rectangle::Rectangle(Vec2 const& punkt1, Vec2 const& punkt2, Color const& _color):
+min_{min(punkt1.x,punkt2.x),min(punkt1.y,punkt2.y)},
+max_{max(punkt1.x,punkt2.x),max(punkt1.y,punkt2.y)},
+col{_color}
+{
 
 }
 
-Rectangle::Rectangle(Vec2 v,float x, float y, Color r):
-x_Vec2 {x}, 
-y_Vec2{y}, 
-v_{v},
-rgb{r}{
-
+float Rectangle::get_length() const{
+    return fabs(min_.y - max_.y);
 }
 
-void Rectangle::setHeight(float h){
-	x_r = h;
+float Rectangle::get_width() const{
+    return fabs(min_.x - max_.x);
 }
 
-float Rectangle::getHeight(){
-	return x_;
+Vec2 Rectangle::get_max() const{
+    return max_;
 }
 
-void Rectangle::setLength(float l){
-	y_=l;
+Vec2 Rectangle::get_min() const{
+    return min_;
 }
 
-float Rectangle::getLength(){
-	return y_;
+float Rectangle::circumference() const{
+    return 2*(get_width()+get_length());
 }
 
-float Rectangle::circumference(){
-	float c = 2*x_+2*y_ ;
-	return c;
+Color Rectangle::get_color() const{
+    return col;
 }
 
-float Rectangle::areaOfShape(){
-	float a = x_*y_;
-	return a;
-}
+void Rectangle::draw(Window const& _win, Color const& overload_col){
+    
+    _win.draw_line(min_.x, min_.y, min_.x, max_.y,
+        overload_col.r, overload_col.g, overload_col.b
+        );
 
 
-float Rectangle::diagonal(){
-	float d = sqrt(x_*x_+y_*y_);
-	return d;
-}
+    _win.draw_line(max_.x, min_.y, max_.x, max_.y,
+        overload_col.r, overload_col.g, overload_col.b
+        );
 
-void Rectangle::draw(Window& win){
-	win.draw_line(
-		v_.x,
-		v_.y,
-		x_+v_.x,
-		v_.y,
-		rgb.red,
-		rgb.green,
-		rgb.blue);
+    _win.draw_line(min_.x, min_.y, max_.x, min_.y,
+        overload_col.r, overload_col.g, overload_col.b
+        );  
 
-	win.draw_line(
-		x_+v_.x,
-		v_.y,
-		x_+v_.x,
-		y_+v_.y,
-		rgb.red,
-		rgb.green,
-		rgb.blue);
+    _win.draw_line(min_.x, max_.y, max_.x, max_.y,
+        overload_col.r, overload_col.g, overload_col.b
+        );  
 
-	win.draw_line(
-		x_+v_.x,
-		y_+v_.y,
-	    v_.x,
-	    y_+v_.y,
-		rgb.red,
-		rgb.green,
-		rgb.blue);
-
-	win.draw_line(
-		v_.x,
-		y_+v_.y,
-		v_.x,
-		v_.y,
-		rgb.red,
-		rgb.green,
-		rgb.blue);
-
-}
-
-void Rectangle::draw(Window& win, Color r){
-
-	win.draw_line(
-		v_.x,
-		v_.y,
-		x_+v_.x,
-		v_.y,
-		r.red,
-		r.green,
-		r.blue);
-
-	win.draw_line(
-		x_+v_.x,
-		v_.y,
-		x_+v_.x,
-		y_+v_.y,
-		r.red,
-		r.green,
-		r.blue);
-
-	win.draw_line(
-		x_+v_.x,
-		y_+v_.y,
-		v_.x,
-		y_+v_.y,
-		r.red,
-		r.green,
-		r.blue);
-
-	win.draw_line(
-		v_.x,
-		y_+v_.y,
-		v_.x,v_.y,
-		r.red,
-		r.green,
-		r.blue);
-
-}
-
-
-bool Rectangle::is_inside(Vec2 v){
-	if(v.x >= v_.x && v.y >= v_.y && v.x <= v_.x+x_ && v.y <= v_.y+y_) 
-		return true;
-	else return false;
-}
+    }
