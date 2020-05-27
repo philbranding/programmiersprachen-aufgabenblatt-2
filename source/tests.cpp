@@ -12,7 +12,7 @@ TEST_CASE("Testing default Constructor","[Constructor]"){
 
 	Vec2 b{5.1f, -9.3f};
 	REQUIRE(5.1f == Approx(b.x));
-	REQUIRE(b.y == Approx(b.y));
+	REQUIRE(-9.3f == Approx(b.y));
 }
 
 
